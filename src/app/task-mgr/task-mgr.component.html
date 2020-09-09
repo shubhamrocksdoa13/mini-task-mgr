@@ -1,0 +1,123 @@
+<div class="header">
+    Mini Task - Manager
+</div>
+<div class="body">
+    <div class="faded-wrapper">
+        <div class="main">
+            <div class="task-manager-header">
+                <button class="create-task" (click)="openModal()">
+                    Create Task
+                </button>
+            </div>
+            <div class="task-manager-body">
+                Task List
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Task Message</th>
+                            <th>Assigned To</th>
+                            <th>Priority</th>
+                            <th>Due Date</th>
+                            <th>Edit</th>
+                          </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of taskList">
+                            <td>{{data.id}}</td>
+                            <td>{{data.message}}</td>
+                            <td>{{data.assigned_name}}</td>
+                            <td>{{data.priority}}</td>
+                            <td>{{data.due_date}}</td>
+                            <td>
+                                <img src="../../assets/edit.ico" alt="edit" class="wd-20 p-5 cursor" title="Edit" (click)="editClicked(data.id)">
+                                <img src="../../assets/delete.ico" alt="del" class="wd-30 p-5 cursor" title="Delete" (click)="deleteClicked(data.id)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="task-manager-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    Developer - Shubham Anand
+</div>
+
+<div class="task-modal" *ngIf='createModeOn || editModeOn'>
+    <div class="modal-header">
+      <div class="modal-title">
+        <h4 class="modal-title pull-left">Task Manager Data</h4>
+      </div>
+      <div class="cross-button-section">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalhide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <form (submit)='createEditFormSubmit()'>
+    <div class="modal-body">
+      <div class="fields" *ngIf='editModeOn'>
+        <div class="wd-20">
+            id 
+        </div>
+        <div class="wd-75">
+            <input type="text" class="wd-100 p-14" [(ngModel)]="taskId" name="taskId" disabled/>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="wd-20">
+            Message 
+        </div>
+        <div class="wd-75">
+            <input type="text" class="wd-100 p-14" [(ngModel)]="taskMessage" name="taskMessage" required/>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="wd-20">
+            Assigned To 
+        </div>
+        <div class="wd-75">
+            <!-- <input type="text" class="wd-100 p-14"/> -->
+            <select name="userList" id="userList" class="wd-106 p-14" (change)="userChanged($event)" [value]="userId">
+                <option value='select'>Select</option>
+                <option *ngFor="let user of userList" value={{user.id}}>{{user.name}}</option>
+            </select>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="wd-20">
+            Priority 
+        </div>
+        <div class="wd-75">
+            <select name="priority" id="priority" class="wd-106 p-14" (change)="priorityChanged($event)" [value]="priorityId">
+                <option value='select'>Select</option>
+                <option *ngFor="let priority of priorityList" value={{priority.id}}>{{priority.name}}</option>
+            </select>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="wd-20">
+            Due Date 
+        </div>
+        <div class="wd-75">
+            <input type="date" class="wd-100 p-14" [(ngModel)]="dueDate" name="dueDate"/>
+        </div>
+      </div>
+      <div class="footer-button">
+        <button class="footer-btn">
+            <span>
+                Create
+            </span>
+            <!-- <span>
+                Edit
+            </span> -->
+        </button>
+      </div>
+    </div>
+    </form>
+  </div>
